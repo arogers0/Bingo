@@ -1,18 +1,20 @@
 from random import randint
 from string import ascii_lowercase
-import tkinter
+from win_window import WinWindow
+import time
 # using 64 possible tile values across the 75 tiles (25 tiles in each 5x5 board)
 tileValues = []
 for i in range(1, 4):
     for char in ascii_lowercase:
-            if not (i == 3 and char > 'l'):
-                val = "%s%d" % (char, i)
-                tileValues.append(val)
+        if not (i == 3 and char > 'l'):
+            val = "%s%d" % (char, i)
+            tileValues.append(val)
 
 testTiles = []
 for i in range(5):
     for j in range(5):
-        testTiles.append("%s%s"%(i,j))
+        testTiles.append("%s%s" % (i, j))
+
 
 class Utility:
 
@@ -22,7 +24,6 @@ class Utility:
         while not any(board.hasBingo() for board in boards):
             Utility.singleIteration(boards)
             # boards[0].getMaster().after(20, None)
-
 
     @staticmethod
     def singleIteration(boards):
@@ -35,12 +36,10 @@ class Utility:
         num = randint(0, 63)
         return tileValues[num]
 
-
     @staticmethod
     def updateBoards(boards, tileVal):
         for board in boards:
             board.updateTiles(tileVal)
-
 
     @staticmethod
     def checkWinner(boards):
@@ -50,6 +49,6 @@ class Utility:
                 winners.append(board)
 
         if len(winners) > 0:
+            winWindow = WinWindow(winners, winners[0].getMaster())
             for winner in winners:
                 print("Board #%d is a winner!" % winner.getId())
-

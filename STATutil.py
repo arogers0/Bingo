@@ -18,11 +18,11 @@ class Utility:
 
     @staticmethod
     def completeGame(boards):
-        # TODO irrelevant checking for bingo here
+        counter = 0
         while not any(board.hasBingo() for board in boards):
+            counter += 1
             Utility.singleIteration(boards)
-            # boards[0].getMaster().after(20, None)
-
+        return counter
 
     @staticmethod
     def singleIteration(boards):
@@ -49,8 +49,9 @@ class Utility:
             if board.hasBingo():
                 winners.append(board)
 
+        id_list = []
         if len(winners) > 0:
             for winner in winners:
-                #print("Board #%d is a winner!" % winner.getId())
-                return winner.getId()
+                id_list.append(winner.getId())
+        return id_list
 

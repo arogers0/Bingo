@@ -11,12 +11,12 @@ class Board:
 
     def __init__(self, master, num, tiles = None):
         self.id = num
-        self.master = master
-        self.boardFrame = Frame(self.master)
-        self.boardFrame.config(highlightbackground="black", highlightthickness=2)
+        #self.master = master
+        #self.boardFrame = Frame(self.master)
+        #self.boardFrame.config(highlightbackground="black", highlightthickness=2)
 
-        self.tileSection = Frame(self.boardFrame)
-        self.tileSection.config(highlightbackground="black", highlightthickness=1)
+        #self.tileSection = Frame(self.boardFrame)
+        #self.tileSection.config(highlightbackground="black", highlightthickness=1)
 
         self.tiles = []
         if tiles is not None:
@@ -25,7 +25,7 @@ class Board:
             self.fillBoard()
         self.bingoStatus = False
 
-        self.fillHeader()
+        #self.fillHeader()
 
     def getMaster(self):
         return self.master
@@ -77,7 +77,7 @@ class Board:
                 if self.tiles[r][c].getValue() == tileVal:
                     # print("updating tile: " + self.tiles[r][c].getValue())
                     self.tiles[r][c].setSelected()
-                    self.tiles[r][c].getLabel().config(bg='red')
+                    #self.tiles[r][c].getLabel().config(bg='red')
 
         self.checkBingo()
 
@@ -104,11 +104,11 @@ class Board:
             tilerow = []
             for c in range(COL_SIZE):
                 index = randint(0, len(tileVals)-1)
-                tilerow.append(Tile(self.tileSection, tileVals[index], r, c))
+                tilerow.append(Tile(None, tileVals[index], r, c))
                 tileVals.pop(index)
             self.tiles.append(tilerow)
 
-        self.tileSection.pack()
+        #self.tileSection.pack()
 
     def getId(self):
         return self.id

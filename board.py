@@ -12,20 +12,18 @@ class Board:
     def __init__(self, master, num, tiles = None):
         self.id = num
         self.master = master
+        self.bingoStatus = False
         self.boardFrame = Frame(self.master)
-        self.boardFrame.config(highlightbackground="black", highlightthickness=2)
 
+        self.fillHeader()
+
+        self.boardFrame.config(highlightbackground="black", highlightthickness=2)
         self.tileSection = Frame(self.boardFrame)
         self.tileSection.config(highlightbackground="black", highlightthickness=1)
 
         self.tiles = []
-        if tiles is not None:
-            self.tiles = tiles[:]
-        else:
-            self.fillBoard()
-        self.bingoStatus = False
+        self.fillBoard()
 
-        self.fillHeader()
 
     def getMaster(self):
         return self.master
@@ -43,10 +41,11 @@ class Board:
                 return True
 
         # check vertical cases
-        for r in range(ROW_SIZE):
+        for c in range(ROW_SIZE):
             column = []
-            for c in range(COL_SIZE):
+            for r in range(COL_SIZE):
                 column.append(self.tiles[r][c])
+                # print("column contains: " + str(r) + ", " + str(c))
             if all(tile.getSelectionVal() for tile in column):
                 print('found winner in vertical of board #' + str(self.id))
                 self.bingoStatus = True
@@ -67,6 +66,7 @@ class Board:
                     rightCheck = False
 
         if leftCheck or rightCheck:
+            print("found winner in diagonal of board #" + str(self.id))
             self.bingoStatus = True
         return self.bingoStatus
 
@@ -112,3 +112,6 @@ class Board:
 
     def getId(self):
         return self.id
+
+    def getTiles(self):
+        return self.tiles
